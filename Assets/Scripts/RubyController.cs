@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RubyController : MonoBehaviour {
+	public float speed = 9.0f;
+
+	public int maxHealth = 5;
+	// public int health { get { return currentHealth; }} // What ugly syntax!!! Me no likey!!! 😒
+	int currentHealth;
+
 	Rigidbody2D rigidbody2d;
 
 	// Start is called before the first frame update
@@ -11,6 +17,7 @@ public class RubyController : MonoBehaviour {
 		// QualitySettings.vSyncCount = 0;
 		// Application.targetFrameRate = 10;
 		rigidbody2d = GetComponent<Rigidbody2D>();
+		currentHealth = maxHealth;
 	}
 
 	// Update is called once per frame
@@ -27,9 +34,18 @@ public class RubyController : MonoBehaviour {
 		float deltaTime = Time.deltaTime;
 
 		Vector2 position = rigidbody2d.position;
-		position.x = position.x + 8.0f * horizontal * deltaTime;
-		position.y = position.y + 8.0f * vertical * deltaTime;
+		position.x = position.x + ((speed * horizontal) * deltaTime);
+		position.y = position.y + ((speed * vertical) * deltaTime);
 
 		rigidbody2d.MovePosition(position); // Fix Ruby's Jittering
+	}
+
+	public void ChangeHealth(int amount) {
+		currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+		Debug.Log(currentHealth + "/" + maxHealth);
+	}
+
+	public int GetCurrentHealth() {
+		return currentHealth;
 	}
 }
