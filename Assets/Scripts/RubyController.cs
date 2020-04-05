@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RubyController : MonoBehaviour {
+	Rigidbody2D rigidbody2d;
+
 	// Start is called before the first frame update
 	void Start() {
 		// Forces game to run at 10 Frames Per Second.
 		// QualitySettings.vSyncCount = 0;
 		// Application.targetFrameRate = 10;
+		rigidbody2d = GetComponent<Rigidbody2D>();
 	}
 
 	// Update is called once per frame
@@ -23,9 +26,10 @@ public class RubyController : MonoBehaviour {
 		 */
 		float deltaTime = Time.deltaTime;
 
-		Vector2 position = transform.position;
-		position.x = position.x + 3.0f * horizontal * deltaTime;
-		position.y = position.y + 3.0f * vertical * deltaTime;
-		transform.position = position;
+		Vector2 position = rigidbody2d.position;
+		position.x = position.x + 8.0f * horizontal * deltaTime;
+		position.y = position.y + 8.0f * vertical * deltaTime;
+
+		rigidbody2d.MovePosition(position); // Fix Ruby's Jittering
 	}
 }
